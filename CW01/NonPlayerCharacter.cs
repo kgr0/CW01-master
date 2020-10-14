@@ -20,7 +20,5 @@ namespace CW01
             this.name = name;
             this.first_part = first_part;
         }
-
-
     }
 }

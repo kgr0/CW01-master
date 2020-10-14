@@ -13,7 +13,7 @@ namespace CW01
         public static string HERONAME = "";
         public static DialogParser parser;
 
-        public static void Init(Location location) //dialogs and npcs initialization
+        public static void Init(Location location) //initialization dialogs and NPCs 
         {
             parser = new DialogParser(hero);
 
@@ -85,7 +85,7 @@ namespace CW01
             Console.ReadLine();
         }
 
-        public static void TalkTo(NonPlayerCharacter npc, DialogParser parser)
+        public static void TalkTo(NonPlayerCharacter npc, DialogParser parser) // dialog process
         {
             Console.Clear();
             NpcDialogPart npc_part;
@@ -139,7 +139,7 @@ namespace CW01
             }
 
         }
-        public static void ShowLocation(Location location)
+        public static void ShowLocation(Location location) // location menu 
         {
             Console.Clear();
             Console.WriteLine("Znajdujesz się w: {0}. Co chcesz zrobić?", location.name);
@@ -171,9 +171,7 @@ namespace CW01
             }
         }
 
-
-
-        public static EHeroClass Choose_class(string name)
+        public static EHeroClass Choose_class(string name) // class choice menu
         {
             Console.Clear();
             Console.WriteLine($"Witaj {name}, wybierz klasę bohatera: ");
@@ -201,15 +199,16 @@ namespace CW01
             }
         }
 
-        public static void Name_menu()
+        public static void Name_menu() // name choice menu
         {
-            Regex regex = new Regex(@"^(?![\s.]+$)[a-zA-Z\s.]*$");
+            Regex regex = new Regex(@"^[a-zA-Z\s]{2,}$");
             string name = "";
             string name_ = "";
 
             Console.WriteLine("Proszę podać imię bohatera:");
             while (true)
             {
+                name_ = "";
                 name = Console.ReadLine();
                 if (regex.IsMatch(name))
                 {
@@ -254,7 +253,7 @@ namespace CW01
             }
         }
 
-        public static void Start_menu()
+        public static void Start_menu() // start menu 
         {
             Console.Clear();
             Console.WriteLine("Witaj w grze < Hero Wars >");
@@ -262,7 +261,6 @@ namespace CW01
             Console.WriteLine("[X] Zamknij program");
 
             string choice;
-           
             
             while (true)
             {
