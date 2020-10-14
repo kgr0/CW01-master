@@ -10,7 +10,6 @@ namespace CW01
     public static class HeroesGame
     {
         public static Hero hero;
-        public static string HERONAME = "";
         public static DialogParser parser;
 
         public static void Init(Location location) //initialization dialogs and NPCs 
@@ -70,9 +69,9 @@ namespace CW01
             NpcDialogPart n8 = new NpcDialogPart("Fajny wybór.");
             h7_2.answers.Add(n8);
 
-            NpcDialogPart n9 = new NpcDialogPart($"Hej czy to Ty jesteś tym słynnym {HERONAME} – pogromcą smoków?”");
+            NpcDialogPart n9 = new NpcDialogPart("Hej czy to Ty jesteś tym słynnym #HERONAME# – pogromcą smoków?”");
 
-            HeroDialogPart h9_1 = new HeroDialogPart($"Tak, jestem {HERONAME}.");
+            HeroDialogPart h9_1 = new HeroDialogPart("Tak, jestem #HERONAME#.");
             HeroDialogPart h9_2 = new HeroDialogPart("Nie.");
             n9.answers.Add(h9_1);
             n9.answers.Add(h9_2);

@@ -8,14 +8,15 @@ namespace CW01
 {
     public class DialogParser
     {
+        public Hero hero;
         public DialogParser(Hero hero)
         {
-            HeroesGame.HERONAME = hero.name;
+            this.hero = hero;
         }
 
         public string ParseDialog(IDialogPart dialog_part)
         {
-            return dialog_part.Part;
+            return dialog_part.Part.Replace("#HERONAME#", hero.name);
         }
 
     }
