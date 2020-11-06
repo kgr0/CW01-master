@@ -11,8 +11,9 @@ namespace CW01
     {
         public static Hero hero;
         public static DialogParser parser;
+        public static List<Location> LocationList;
 
-        public static void Init(Location location) //initialization dialogs and NPCs 
+        public static void Init() //initialization dialogs and NPCs 
         {
             parser = new DialogParser(hero);
 
@@ -76,10 +77,12 @@ namespace CW01
             n9.answers.Add(h9_1);
             n9.answers.Add(h9_2);
 
-
-            location.Add_npc(new NonPlayerCharacter("Cain", n1));
-            location.Add_npc(new NonPlayerCharacter("Warriv", n5));
-            location.Add_npc(new NonPlayerCharacter("Deckard", n9));
+            foreach (var location in LocationList)
+            {
+                location.Add_npc(new NonPlayerCharacter("Cain", n1));
+                location.Add_npc(new NonPlayerCharacter("Warriv", n5));
+                location.Add_npc(new NonPlayerCharacter("Deckard", n9));
+            }
 
             Console.ReadLine();
         }
@@ -147,6 +150,7 @@ namespace CW01
             {
                 Console.WriteLine("[{0}] Porozmawiaj z {1}", i + 1, location.npc_list[i].name);
             }
+            Console.WriteLine("[T] Podróżuj");
             Console.WriteLine("[X] Zamknij program");
 
             string choice;
@@ -157,6 +161,10 @@ namespace CW01
                 choice = Console.ReadLine();
                 if (choice == "X")
                     return;
+                else if (choice == "T")
+                {
+                    Travel(location);
+                }
                 else if (!Int32.TryParse(choice, out npc_index) || npc_index > location.npc_list.Count)
                 {
                     Console.WriteLine("Niepoprawna opcja. Sprobuj jeszcze raz.");
@@ -165,6 +173,42 @@ namespace CW01
                 {
                     TalkTo(location.npc_list[npc_index - 1], parser);
                     ShowLocation(location);
+                    break;
+                }
+            }
+        }
+
+        public static  void Travel(Location location)
+        {
+            Console.Clear();
+            Console.WriteLine($"Znajdujesz się w : {location.name}. Gdzie chcesz wyruszyć?");
+
+            var AccessibleList = LocationList.Where(loc => loc.IsUnlocked && !loc.Equals(location)).OrderBy(loc => loc.name);
+
+            for (int i = 0; i < AccessibleList.Count(); i++)
+            {
+                Console.WriteLine("[{0}] {1}", i + 1, AccessibleList.ElementAt(i).name);
+            }
+            Console.WriteLine("[X] Powrót");
+
+            string choice;
+            int loc_index;
+
+            while (true)
+            {
+                choice = Console.ReadLine();
+                if (choice == "X")
+                {
+                    ShowLocation(location);
+                    break;
+                }
+                else if (!Int32.TryParse(choice, out loc_index) || loc_index > AccessibleList.Count())
+                {
+                    Console.WriteLine("Niepoprawna opcja. Sprobuj jeszcze raz.");
+                }
+                else
+                {
+                    ShowLocation(AccessibleList.ElementAt(loc_index - 1));
                     break;
                 }
             }
@@ -291,9 +335,16 @@ namespace CW01
             Console.WriteLine();
             Console.WriteLine("Wciśnij Enter...");
 
-            Location location = new Location("Calimport");
-            Init(location);
-            ShowLocation(location);
+            LocationList = new List<Location>();
+            LocationList.Add(new Location("Calimport", true));
+            LocationList.Add(new Location("Brenigem", true));
+            LocationList.Add(new Location("Osterfield", true));
+            LocationList.Add(new Location("Milestone", true));
+            LocationList.Add(new Location("Gimberland", false));
+            LocationList.Add(new Location("Stanindeff", false));
+           
+            Init();
+            ShowLocation(LocationList[0]);
         }
     }
 }

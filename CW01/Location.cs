@@ -10,11 +10,13 @@ namespace CW01
     {
         public string name;
         public List<NonPlayerCharacter> npc_list;
+        public bool IsUnlocked;
 
-        public Location(string name)
+        public Location(string name, bool isUnlocked)
         {
             this.name = name;
             npc_list = new List<NonPlayerCharacter>();
+            this.IsUnlocked = isUnlocked;
         } 
 
         public void Add_npc(NonPlayerCharacter npc)
